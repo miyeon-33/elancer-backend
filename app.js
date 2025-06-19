@@ -13,6 +13,7 @@ const profileRouter = require('./routes/profile');
 const productRouter = require('./routes/product');
 const projectRouter = require('./routes/project');
 const technologyRouter = require('./routes/technology');
+const categoryRouter = require('./routes/category');
 
 // dotenv 활성화
 dotenv.config();
@@ -62,6 +63,7 @@ app.use(profileRouter);
 app.use(productRouter);
 app.use(projectRouter);
 app.use(technologyRouter);
+app.use(categoryRouter);
 
 // 에러처리 미들웨어
 app.use((err, req, res, next) => {

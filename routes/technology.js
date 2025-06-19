@@ -3,9 +3,9 @@ const router = express.Router();
 const connection = require('../config/mysql');
 
 router.get('/technology', (req, res) => {
-  const query = `SELECT t.*, GROUP_CONCAT(d.detail_name) AS detail_name
+  const query = `SELECT t.*, IFNULL(GROUP_CONCAT(d.detail_name), '') AS detail_name
                 FROM technologies AS t
-                JOIN technology_details AS d 
+                LEFT JOIN technology_details AS d 
                 ON t.technology_id = d.technology_id
                 GROUP BY t.technology_id`;
 

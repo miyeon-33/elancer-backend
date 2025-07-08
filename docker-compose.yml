@@ -6,7 +6,7 @@ services:
     build: .
     # 컨테이너 내부 3001포트를 로컬 3001에 연결
     ports:
-      - '3002:3001'
+      - '3001:3001'
     # 환경변수파일 사용
     env_file:
       - .env
@@ -34,4 +34,4 @@ services:
       - ./project_db.sql:/docker-entrypoint-initdb.d/project_db.sql
     # 로컬 db가 3306이므로 로컬 3307을 통해 컨테이너 내부 3306으로 접속
     ports:
-      - '3308:3306'
+      - '3307:3306'

@@ -167,4 +167,40 @@ router.post('/project/by-keyword', (req, res) => {
     res.json({ projects: results });
   });
 });
+
+// GET /project/category/2 - 기획 카테고리만 조회
+router.get('/project/category/:id', (req, res) => {
+  const categoryId = parseInt(req.params.id, 10);
+
+  const countQuery = `
+    SELECT COUNT(*) AS total 
+    FROM project 
+    WHERE category_id = ?
+  `;
+
+  const dataQuery = `
+    SELECT 
+      p.*, 
+      c.category_name 
+    FROM 
+      project AS p 
+    JOIN 
+      category AS c ON p.category_id = c.category_id 
+    WHERE 
+      p.category_id = ?
+    ORDER BY 
+      p.project_id ASC
+  `;
+
+  connection.query(countQuery, [categoryId], (err, countResult) => {
+    if (err) return res.status(500).send('Database error (count)');
+
+    const total = countResult[0].total;
+
+    connection.query(dataQuery, [categoryId], (err, result) => {
+      if (err) return res.status(500).send('Database error (data)');
+      res.json({ total, projects: result });
+    });
+  });
+});
 module.exports = router;
